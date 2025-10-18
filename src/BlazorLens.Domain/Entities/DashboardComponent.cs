@@ -1,22 +1,26 @@
-﻿using BlazorLens.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BlazorLens.Shared.Kernel;
+using BlazorLens.Domain.Enums;
 
-namespace BlazorLens.Domain.Entities
+namespace BlazorLens.Domain.Entities;
+
+public class DashboardComponent : ComponentBase
 {
-    public class DashboardComponent : ComponentBase
+    public Guid DashboardId { get; private set; }
+
+    // Nawigacja do Dashboard
+    public virtual Dashboard Dashboard { get; private set; } = null!;
+
+    public DashboardComponent(Guid id, string name, string description, ComponentType type, Guid dashboardId)
+        : base(id, name, description, type)
     {
-        public Guid DashboardId { get; private set; }
-
-        public DashboardComponent(Guid id, string name, string description, ComponentType type, Guid dashboardId)
-            : base(id, name, description, type)
-        {
-            DashboardId = dashboardId;
-        }
-
-        protected DashboardComponent() { }
+        DashboardId = dashboardId;
     }
+
+    // Metody domenowe
+    public void ChangeDashboard(Guid newDashboardId)
+    {
+        DashboardId = newDashboardId;
+    }
+
+    protected DashboardComponent() { }
 }

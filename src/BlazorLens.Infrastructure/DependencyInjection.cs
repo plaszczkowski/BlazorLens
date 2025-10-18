@@ -1,4 +1,5 @@
 ﻿using BlazorLens.Application.Interfaces;
+using BlazorLens.Infrastructure.Data;
 using BlazorLens.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,10 +18,8 @@ namespace BlazorLens.Infrastructure
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            // Rejestracja DbContext (tymczasowo - bez bazy)
-            services.AddDbContext<DbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
             {
-                // Tymczasowo używamy InMemory - później zmienimy na SQL Server
                 options.UseInMemoryDatabase("BlazorLensDb");
             });
 
