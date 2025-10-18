@@ -1,0 +1,21 @@
+﻿<ErrorBoundary>
+    <ChildContent>
+        <div class="component-container">
+            <div class="component-grid">
+                <CascadingValue Value="this">
+                    @ChildContent
+                </CascadingValue>
+            </div>
+        </div>
+    </ChildContent>
+    <ErrorContent>
+        <div class="error-message">
+            <p>Error loading component</p>
+        </div>
+    </ErrorContent>
+</ErrorBoundary>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
