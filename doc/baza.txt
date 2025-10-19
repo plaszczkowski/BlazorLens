@@ -1,0 +1,7 @@
+Możesz sprawdzić bazę używając:
+
+**Azure Data Studio / SQL Server Management Studio:**
+```
+Server: localhost,1433
+User: sa
+Password: BlazorLens2024!
