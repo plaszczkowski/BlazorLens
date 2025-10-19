@@ -64,8 +64,10 @@ public static class DependencyInjection
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IComponentRepository, ComponentRepository>();
 
-        // Register Unit of Work - will be implemented next
-        // services.AddScoped<IUnitOfWork, UnitOfWork>();
+        // Register Unit of Work - HYBRID APPROACH
+        // Simple operations: inject ApplicationDbContext directly
+        // Complex operations: inject IUnitOfWork for explicit transaction control
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
