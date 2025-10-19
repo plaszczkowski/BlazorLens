@@ -1,0 +1,63 @@
+﻿using BlazorLens.Shared.Kernel;
+
+namespace BlazorLens.Domain.ValueObjects;
+
+/// <summary>
+/// Value Object representing position of a component in grid layout.
+/// Example implementation showing how to use ValueObject base class.
+/// </summary>
+public sealed class ComponentPosition : ValueObject
+{
+    public int Row { get; }
+    public int Column { get; }
+    public int RowSpan { get; }
+    public int ColSpan { get; }
+
+    /// <summary>
+    /// Creates a new component position.
+    /// </summary>
+    /// <param name="row">Starting row (1-based)</param>
+    /// <param name="column">Starting column (1-based)</param>
+    /// <param name="rowSpan">Number of rows to span</param>
+    /// <param name="colSpan">Number of columns to span</param>
+    /// <exception cref="ArgumentException">When values are invalid</exception>
+    public ComponentPosition(int row, int column, int rowSpan = 1, int colSpan = 1)
+    {
+        // Guard clauses - CCP-005 (Defensive Programming)
+        if (row < 1)
+            throw new ArgumentException("Row must be at least 1", nameof(row));
+
+        if (column < 1)
+            throw new ArgumentException("Column must be at least 1", nameof(column));
+
+        if (rowSpan < 1)
+            throw new ArgumentException("RowSpan must be at least 1", nameof(rowSpan));
+
+        if (colSpan < 1)
+            throw new ArgumentException("ColSpan must be at least 1", nameof(colSpan));
+
+        Row = row;
+        Column = column;
+        RowSpan = rowSpan;
+        ColSpan = colSpan;
+    }
+
+    /// <summary>
+    /// Defines equality based on all position properties.
+    /// </summary>
+    protected override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Row;
+        yield return Column;
+        yield return RowSpan;
+        yield return ColSpan;
+    }
+
+    /// <summary>
+    /// Returns string representation for debugging.
+    /// </summary>
+    public override string ToString()
+    {
+        return $"Position(Row:{Row}, Col:{Column}, RowSpan:{RowSpan}, ColSpan:{ColSpan})";
+    }
+}
