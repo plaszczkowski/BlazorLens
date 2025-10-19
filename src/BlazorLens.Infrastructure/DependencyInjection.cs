@@ -4,29 +4,69 @@ using BlazorLens.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BlazorLens.Infrastructure
+namespace BlazorLens.Infrastructure;
+
+/// <summary>
+/// Infrastructure layer dependency injection configuration.
+/// Compliance: ARCH-001 (Clean Architecture), ARCH-002 (Separation of Concerns)
+/// </summary>
+public static class DependencyInjection
 {
-    public static class DependencyInjection
+    /// <summary>
+    /// Registers infrastructure services including database context and repositories.
+    /// </summary>
+    /// <param name="services">Service collection</param>
+    /// <param name="configuration">Application configuration</param>
+    /// <returns>Service collection for chaining</returns>
+    /// <exception cref="ArgumentNullException">When services or configuration is null</exception>
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        public static IServiceCollection AddInfrastructure(
-            this IServiceCollection services,
-            IConfiguration configuration)
+        // Guard clauses - CCP-005 (Defensive Programming)
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(configuration);
+
+        // Get connection string - SEC-004 (Secrets Management)
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+        // Register DbContext with SQL Server
+        services.AddDbContext<ApplicationDbContext>(options =>
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseInMemoryDatabase("BlazorLensDb");
-            });
+            options.UseSqlServer(
+                connectionString,
+                sqlOptions =>
+                {
+                    // Enable retry on failure - CLOUD-002 (Circuit Breaker pattern)
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 3,
+                        maxRetryDelay: TimeSpan.FromSeconds(5),
+                        errorNumbersToAdd: null);
 
-            // Rejestracja repozytoriów
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+                    // Command timeout
+                    sqlOptions.CommandTimeout(30);
 
-            return services;
-        }
+                    // Migration assembly
+                    sqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+                });
+
+            // Enable sensitive data logging in development only
+            // SEC-001 (Least Privilege) - don't log sensitive data in production
+#if DEBUG
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
+#endif
+        });
+
+        // Register repositories - OOD-001 (Single Responsibility Principle)
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped<IComponentRepository, ComponentRepository>();
+
+        // Register Unit of Work - will be implemented next
+        // services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        return services;
     }
 }
