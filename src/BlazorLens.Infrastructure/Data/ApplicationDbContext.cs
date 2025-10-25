@@ -47,6 +47,44 @@ public class ApplicationDbContext : DbContext, IQueryDbContext
     IQueryable<DashboardComponent> IQueryDbContext.DashboardComponents => DashboardComponentsSet;
 
     /// <summary>
+    /// Materializes a query to a list asynchronously using EF Core.
+    /// Compliance: ARCH-001 - EF Core call hidden behind interface
+    /// </summary>
+    public async Task<List<T>> ToListAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default)
+    {
+        // Guard clause - CCP-005
+        ArgumentNullException.ThrowIfNull(query);
+
+        // This is where EF Core's ToListAsync is actually called
+        // Application Layer doesn't need to know about EF Core
+        return await query.ToListAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Gets the first element or null using EF Core.
+    /// Compliance: ARCH-001 - EF Core call hidden behind interface
+    /// </summary>
+    public async Task<T?> FirstOrDefaultAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default) where T : class
+    {
+        // Guard clause - CCP-005
+        ArgumentNullException.ThrowIfNull(query);
+
+        return await query.FirstOrDefaultAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Counts elements in a query using EF Core.
+    /// Compliance: ARCH-001 - EF Core call hidden behind interface
+    /// </summary>
+    public async Task<int> CountAsync<T>(IQueryable<T> query, CancellationToken cancellationToken = default)
+    {
+        // Guard clause - CCP-005
+        ArgumentNullException.ThrowIfNull(query);
+
+        return await query.CountAsync(cancellationToken);
+    }
+
+    /// <summary>
     /// Configures entity mappings using FluentAPI.
     /// Compliance: ARCH-002 (Separation of Concerns) - configurations in separate files
     /// </summary>

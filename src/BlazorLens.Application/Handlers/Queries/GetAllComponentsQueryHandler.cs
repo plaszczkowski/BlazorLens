@@ -57,8 +57,8 @@ public class GetAllComponentsQueryHandler : IRequestHandler<GetAllComponentsQuer
             // Order by creation date (default)
             query = query.OrderBy(c => c.CreatedAt);
 
-            // Execute query with projection
-            var components = await query
+            // Build query (LINQ
+            var q = query
                 .Select(c => new ComponentDto
                 {
                     Id = c.Id,
@@ -71,8 +71,9 @@ public class GetAllComponentsQueryHandler : IRequestHandler<GetAllComponentsQuer
                     DashboardName = request.IncludeDashboardName
                         ? c.Dashboard.Name
                         : string.Empty
-                })
-                .ToListAsync(cancellationToken);
+                });
+
+            var components = await _context.ToListAsync(q, cancellationToken);
 
             return OperationResult<List<ComponentDto>>.Success(components);
         }

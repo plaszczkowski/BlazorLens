@@ -40,7 +40,7 @@ public class GetComponentByIdQueryHandler : IRequestHandler<GetComponentByIdQuer
         try
         {
             // Query with dashboard join for name
-            var dto = await _context.DashboardComponents
+            var query = _context.DashboardComponents
                 .Where(c => c.Id == request.Id)
                 .Select(c => new ComponentDto
                 {
@@ -52,8 +52,9 @@ public class GetComponentByIdQueryHandler : IRequestHandler<GetComponentByIdQuer
                     CreatedAt = c.CreatedAt,
                     DashboardId = c.DashboardId,
                     DashboardName = c.Dashboard.Name
-                })
-                .FirstOrDefaultAsync(cancellationToken);
+                });
+
+            var dto = await _context.FirstOrDefaultAsync(query, cancellationToken);
 
             // Fail-fast if not found - CON-005
             if (dto == null)

@@ -49,7 +49,7 @@ public class GetDashboardsPagedQueryHandler : IRequestHandler<GetDashboardsPaged
             }
 
             // Get total count for pagination
-            var totalCount = await query.CountAsync(cancellationToken);
+            var totalCount = _context.CountAsync(query, cancellationToken);
 
             // Apply sorting
             query = request.SortBy switch
@@ -64,7 +64,7 @@ public class GetDashboardsPagedQueryHandler : IRequestHandler<GetDashboardsPaged
             };
 
             // Apply pagination
-            var items = await query
+            var q =  query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .Select(d => new DashboardDto
@@ -74,8 +74,9 @@ public class GetDashboardsPagedQueryHandler : IRequestHandler<GetDashboardsPaged
                     Description = d.Description,
                     CreatedAt = d.CreatedAt,
                     ComponentCount = d.Components.Count
-                })
-                .ToListAsync(cancellationToken);
+                });
+
+            var items = await _context.ToListAsync(q, cancellationToken);
 
             // Create paged result
             var pagedResult = new PagedResult<DashboardDto>
@@ -83,7 +84,7 @@ public class GetDashboardsPagedQueryHandler : IRequestHandler<GetDashboardsPaged
                 Items = items,
                 PageNumber = request.PageNumber,
                 PageSize = request.PageSize,
-                TotalCount = totalCount
+                TotalCount = totalCount.Result
             };
 
             return OperationResult<PagedResult<DashboardDto>>.Success(pagedResult);

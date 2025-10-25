@@ -55,7 +55,7 @@ public class GetAllDashboardsQueryHandler : IRequestHandler<GetAllDashboardsQuer
             };
 
             // Execute query with projection
-            var dashboards = await query
+            var q = query
                 .Select(d => new DashboardDto
                 {
                     Id = d.Id,
@@ -65,10 +65,11 @@ public class GetAllDashboardsQueryHandler : IRequestHandler<GetAllDashboardsQuer
                     ComponentCount = request.IncludeComponentCount
                         ? d.Components.Count
                         : 0
-                })
-                .ToListAsync(cancellationToken);
+                });
 
-            return OperationResult<List<DashboardDto>>.Success(dashboards);
+            var components = await _context.ToListAsync(q, cancellationToken);
+
+            return OperationResult<List<DashboardDto>>.Success(components);
         }
         catch (Exception ex)
         {
