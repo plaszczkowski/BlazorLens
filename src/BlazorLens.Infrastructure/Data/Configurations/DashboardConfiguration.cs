@@ -1,8 +1,4 @@
-﻿using BlazorLens.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace BlazorLens.Infrastructure.Data.Configurations;
+﻿namespace BlazorLens.Infrastructure.Data.Configurations;
 
 /// <summary>
 /// Entity Framework configuration for Dashboard entity.

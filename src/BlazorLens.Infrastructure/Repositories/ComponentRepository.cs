@@ -1,9 +1,4 @@
-﻿using BlazorLens.Application.Interfaces;
-using BlazorLens.Domain.Entities;
-using BlazorLens.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-
-namespace BlazorLens.Infrastructure.Repositories;
+﻿namespace BlazorLens.Infrastructure.Repositories;
 
 /// <summary>
 /// Repository for DashboardComponent entities with dashboard-specific queries.

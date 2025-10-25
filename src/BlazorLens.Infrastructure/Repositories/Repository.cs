@@ -1,9 +1,4 @@
-﻿using BlazorLens.Application.Interfaces;
-using BlazorLens.Infrastructure.Data;
-using BlazorLens.Shared.Kernel;
-using Microsoft.EntityFrameworkCore;
-
-namespace BlazorLens.Infrastructure.Repositories;
+﻿namespace BlazorLens.Infrastructure.Repositories;
 
 /// <summary>
 /// Generic repository implementation for entities.

@@ -1,9 +1,4 @@
-﻿using BlazorLens.Application.Interfaces;
-using BlazorLens.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-
-namespace BlazorLens.Infrastructure.Data;
+﻿namespace BlazorLens.Infrastructure.Data;
 
 /// <summary>
 /// Application database context.

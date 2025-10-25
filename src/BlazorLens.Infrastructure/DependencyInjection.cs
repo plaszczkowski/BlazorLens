@@ -1,11 +1,4 @@
-﻿using BlazorLens.Application.Interfaces;
-using BlazorLens.Infrastructure.Data;
-using BlazorLens.Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace BlazorLens.Infrastructure;
+﻿namespace BlazorLens.Infrastructure;
 
 /// <summary>
 /// Infrastructure layer dependency injection configuration.

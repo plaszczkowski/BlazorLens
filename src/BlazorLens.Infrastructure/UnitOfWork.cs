@@ -1,8 +1,4 @@
-﻿using BlazorLens.Application.Interfaces;
-using BlazorLens.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore.Storage;
-
-namespace BlazorLens.Infrastructure;
+﻿namespace BlazorLens.Infrastructure;
 
 /// <summary>
 /// Unit of Work implementation for managing database transactions.
