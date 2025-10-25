@@ -275,7 +275,7 @@ RealTimeMonitor
 KONFIGURACJA BEZPIECZEÅƒSTWA:
 
 POLICIES:
-DashboardAccess - dostÄ™p do dashboardu
+DashboardAccess - dostep do dashboardu
 ComponentManagement - zarzÄ…dzanie komponentami
 SystemAdministration - administracja systemem
 
@@ -297,7 +297,7 @@ XSS protection
 MONITORING I OBSERWOWALNOÅšÄ†:
 
 HEALTH CHECKS:
-ComponentHealthCheck - zdrowie komponentÃ³w
+ComponentHealthCheck - zdrowie komponentow
 DatabaseHealthCheck - dostÄ™pnoÅ›Ä‡ bazy
 SignalRHealthCheck - poÅ‚Ä…czenia SignalR
 MemoryHealthCheck - uÅ¼ycie pamiÄ™ci
