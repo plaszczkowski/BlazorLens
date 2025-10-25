@@ -3,7 +3,6 @@ using BlazorLens.Application.Interfaces;
 using BlazorLens.Application.Queries;
 using BlazorLens.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BlazorLens.Application.Handlers.Queries;
 

@@ -69,6 +69,10 @@ public static class DependencyInjection
         // Complex operations: inject IUnitOfWork for explicit transaction control
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+        // Register IQueryDbContext for query handlers - ARCH-001 (Clean Architecture)
+        // Application Layer depends on interface, not concrete implementation
+        services.AddScoped<IQueryDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+
         return services;
     }
 }

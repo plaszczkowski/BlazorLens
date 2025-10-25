@@ -1,10 +1,7 @@
 ﻿using BlazorLens.Application.DTOs;
 using BlazorLens.Application.Interfaces;
 using BlazorLens.Application.Queries;
-using BlazorLens.Domain.Entities;
-using BlazorLens.Infrastructure.Data;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BlazorLens.Application.Handlers.Queries;
 
@@ -15,14 +12,14 @@ namespace BlazorLens.Application.Handlers.Queries;
 /// </summary>
 public class GetAllDashboardsQueryHandler : IRequestHandler<GetAllDashboardsQuery, OperationResult<List<DashboardDto>>>
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IQueryDbContext _context;
 
     /// <summary>
     /// Initializes a new instance of GetAllDashboardsQueryHandler.
     /// </summary>
     /// <param name="context">Database context for complex queries</param>
     /// <exception cref="ArgumentNullException">When context is null</exception>
-    public GetAllDashboardsQueryHandler(ApplicationDbContext context)
+    public GetAllDashboardsQueryHandler(IQueryDbContext context)
     {
         // Guard clause - CCP-005 (Defensive Programming)
         ArgumentNullException.ThrowIfNull(context);
