@@ -20,14 +20,14 @@ public class DbContextTests
         using (var context = new ApplicationDbContext(options))
         {
             var dashboard = new Dashboard(Guid.NewGuid(), "Test Dashboard", "Test Description");
-            context.Dashboards.Add(dashboard);
+            context.Add(dashboard);
             await context.SaveChangesAsync();
         }
 
         // Assert
         using (var context = new ApplicationDbContext(options))
         {
-            var savedDashboard = await context.Dashboards.FirstAsync();
+            var savedDashboard = await context.DashboardsSet.FirstAsync();
             Assert.NotNull(savedDashboard);
             Assert.Equal("Test Dashboard", savedDashboard.Name);
         }
@@ -55,15 +55,15 @@ public class DbContextTests
                 ComponentType.Chart,
                 dashboardId);
 
-            context.Dashboards.Add(dashboard);
-            context.DashboardComponents.Add(component);
+            context.Add(dashboard);
+            context.Add(component);
             await context.SaveChangesAsync();
         }
 
         // Assert
         using (var context = new ApplicationDbContext(options))
         {
-            var savedComponent = await context.DashboardComponents
+            var savedComponent = await context.DashboardComponentsSet
                 .FirstAsync(c => c.Id == componentId);
 
             Assert.NotNull(savedComponent);
