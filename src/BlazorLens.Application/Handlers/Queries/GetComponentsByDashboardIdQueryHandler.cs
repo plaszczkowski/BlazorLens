@@ -69,7 +69,7 @@ public class GetComponentsByDashboardIdQueryHandler : IRequestHandler<GetCompone
             };
 
             // Execute query with projection
-            var q = query
+            var projectionQuery = query
                 .Select(c => new ComponentDto
                 {
                     Id = c.Id,
@@ -82,7 +82,8 @@ public class GetComponentsByDashboardIdQueryHandler : IRequestHandler<GetCompone
                     DashboardName = c.Dashboard.Name
                 });
 
-            var components = await _context.ToListAsync(q, cancellationToken);
+            // Materialize using IQueryDbContext helper
+            var components = await _context.ToListAsync(projectionQuery, cancellationToken);
 
             return OperationResult<List<ComponentDto>>.Success(components);
         }

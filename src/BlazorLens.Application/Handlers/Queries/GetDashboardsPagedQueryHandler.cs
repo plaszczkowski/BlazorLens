@@ -43,8 +43,8 @@ public class GetDashboardsPagedQueryHandler : IRequestHandler<GetDashboardsPaged
                 query = query.Where(d => d.Name.Contains(request.NameFilter));
             }
 
-            // Get total count for pagination
-            var totalCount = _context.CountAsync(query, cancellationToken);
+            // Get total count for pagination (BEFORE Skip/Take)
+            var totalCount = await _context.CountAsync(query, cancellationToken);
 
             // Apply sorting
             query = request.SortBy switch
@@ -59,7 +59,7 @@ public class GetDashboardsPagedQueryHandler : IRequestHandler<GetDashboardsPaged
             };
 
             // Apply pagination
-            var q =  query
+            var projectionQuery = query
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .Select(d => new DashboardDto
@@ -71,7 +71,8 @@ public class GetDashboardsPagedQueryHandler : IRequestHandler<GetDashboardsPaged
                     ComponentCount = d.Components.Count
                 });
 
-            var items = await _context.ToListAsync(q, cancellationToken);
+            // Materialize using IQueryDbContext helper
+            var items = await _context.ToListAsync(projectionQuery, cancellationToken);
 
             // Create paged result
             var pagedResult = new PagedResult<DashboardDto>
@@ -79,7 +80,7 @@ public class GetDashboardsPagedQueryHandler : IRequestHandler<GetDashboardsPaged
                 Items = items,
                 PageNumber = request.PageNumber,
                 PageSize = request.PageSize,
-                TotalCount = totalCount.Result
+                TotalCount = totalCount
             };
 
             return OperationResult<PagedResult<DashboardDto>>.Success(pagedResult);

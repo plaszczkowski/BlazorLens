@@ -49,6 +49,7 @@ public class GetComponentByIdQueryHandler : IRequestHandler<GetComponentByIdQuer
                     DashboardName = c.Dashboard.Name
                 });
 
+            // Materialize using IQueryDbContext helper
             var dto = await _context.FirstOrDefaultAsync(query, cancellationToken);
 
             // Fail-fast if not found - CON-005

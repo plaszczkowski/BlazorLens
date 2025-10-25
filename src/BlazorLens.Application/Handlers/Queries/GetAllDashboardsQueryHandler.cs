@@ -50,7 +50,7 @@ public class GetAllDashboardsQueryHandler : IRequestHandler<GetAllDashboardsQuer
             };
 
             // Execute query with projection
-            var q = query
+            var projectionQuery = query
                 .Select(d => new DashboardDto
                 {
                     Id = d.Id,
@@ -62,9 +62,10 @@ public class GetAllDashboardsQueryHandler : IRequestHandler<GetAllDashboardsQuer
                         : 0
                 });
 
-            var components = await _context.ToListAsync(q, cancellationToken);
+            // Materialize using IQueryDbContext helper (NO EF Core in Application!)
+            var dashboards = await _context.ToListAsync(projectionQuery, cancellationToken);
 
-            return OperationResult<List<DashboardDto>>.Success(components);
+            return OperationResult<List<DashboardDto>>.Success(dashboards);
         }
         catch (Exception ex)
         {
