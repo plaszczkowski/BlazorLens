@@ -16,9 +16,7 @@ public class ChangeComponentStatusCommandHandler : IRequestHandler<ChangeCompone
     /// <param name="componentRepository">Component repository</param>
     /// <param name="unitOfWork">Unit of work for transaction management</param>
     /// <exception cref="ArgumentNullException">When dependencies are null</exception>
-    public ChangeComponentStatusCommandHandler(
-        IComponentRepository componentRepository,
-        IUnitOfWork unitOfWork)
+    public ChangeComponentStatusCommandHandler(IComponentRepository componentRepository, IUnitOfWork unitOfWork)
     {
         // Guard clauses - CCP-005 (Defensive Programming)
         ArgumentNullException.ThrowIfNull(componentRepository);
@@ -35,9 +33,7 @@ public class ChangeComponentStatusCommandHandler : IRequestHandler<ChangeCompone
     /// <param name="request">Command request</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Operation result with success flag</returns>
-    public async Task<OperationResult<bool>> Handle(
-        ChangeComponentStatusCommand request,
-        CancellationToken cancellationToken)
+    public async Task<OperationResult<bool>> Handle(ChangeComponentStatusCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -47,15 +43,13 @@ public class ChangeComponentStatusCommandHandler : IRequestHandler<ChangeCompone
             // Fail-fast if not found - CON-005
             if (component == null)
             {
-                return OperationResult<bool>.Failure(
-                    $"Component with ID {request.ComponentId} not found.");
+                return OperationResult<bool>.Failure($"Component with ID {request.ComponentId} not found.");
             }
 
             // Parse enum - validation already done by FluentValidation
             if (!Enum.TryParse<ComponentStatus>(request.NewStatus, out var newStatus))
             {
-                return OperationResult<bool>.Failure(
-                    $"Invalid component status: {request.NewStatus}");
+                return OperationResult<bool>.Failure($"Invalid component status: {request.NewStatus}");
             }
 
             // Use domain method to change status
@@ -75,9 +69,7 @@ public class ChangeComponentStatusCommandHandler : IRequestHandler<ChangeCompone
         catch (Exception ex)
         {
             // Fail-fast error handling - CON-005
-            return OperationResult<bool>.Failure(
-                "Failed to change component status.",
-                ex.Message);
+            return OperationResult<bool>.Failure("Failed to change component status.", ex.Message);
         }
     }
 }

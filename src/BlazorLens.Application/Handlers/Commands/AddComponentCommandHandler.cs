@@ -18,10 +18,7 @@ public class AddComponentCommandHandler : IRequestHandler<AddComponentCommand, O
     /// <param name="componentRepository">Component repository</param>
     /// <param name="unitOfWork">Unit of work for transaction management</param>
     /// <exception cref="ArgumentNullException">When dependencies are null</exception>
-    public AddComponentCommandHandler(
-        IRepository<Dashboard> dashboardRepository,
-        IComponentRepository componentRepository,
-        IUnitOfWork unitOfWork)
+    public AddComponentCommandHandler(IRepository<Dashboard> dashboardRepository, IComponentRepository componentRepository, IUnitOfWork unitOfWork)
     {
         // Guard clauses - CCP-005 (Defensive Programming)
         ArgumentNullException.ThrowIfNull(dashboardRepository);
@@ -40,9 +37,7 @@ public class AddComponentCommandHandler : IRequestHandler<AddComponentCommand, O
     /// <param name="request">Command request</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Operation result with new component ID</returns>
-    public async Task<OperationResult<Guid>> Handle(
-        AddComponentCommand request,
-        CancellationToken cancellationToken)
+    public async Task<OperationResult<Guid>> Handle(AddComponentCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -50,15 +45,13 @@ public class AddComponentCommandHandler : IRequestHandler<AddComponentCommand, O
             var dashboard = await _dashboardRepository.GetByIdAsync(request.DashboardId);
             if (dashboard == null)
             {
-                return OperationResult<Guid>.Failure(
-                    $"Dashboard with ID {request.DashboardId} not found.");
+                return OperationResult<Guid>.Failure($"Dashboard with ID {request.DashboardId} not found.");
             }
 
             // Parse enum - validation already done by FluentValidation
             if (!Enum.TryParse<ComponentType>(request.Type, out var componentType))
             {
-                return OperationResult<Guid>.Failure(
-                    $"Invalid component type: {request.Type}");
+                return OperationResult<Guid>.Failure($"Invalid component type: {request.Type}");
             }
 
             // Create domain entity
@@ -81,9 +74,7 @@ public class AddComponentCommandHandler : IRequestHandler<AddComponentCommand, O
         catch (Exception ex)
         {
             // Fail-fast error handling - CON-005
-            return OperationResult<Guid>.Failure(
-                "Failed to add component.",
-                ex.Message);
+            return OperationResult<Guid>.Failure("Failed to add component.", ex.Message);
         }
     }
 }
