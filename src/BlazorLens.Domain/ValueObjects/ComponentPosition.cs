@@ -1,6 +1,4 @@
-﻿using BlazorLens.Shared.Kernel;
-
-namespace BlazorLens.Domain.ValueObjects;
+﻿namespace BlazorLens.Domain.ValueObjects;
 
 /// <summary>
 /// Value Object representing position of a component in grid layout.

@@ -1,7 +1,4 @@
-﻿using BlazorLens.Shared.Kernel;
-using BlazorLens.Domain.Enums;
-
-namespace BlazorLens.Domain.Entities;
+﻿namespace BlazorLens.Domain.Entities;
 
 public class DashboardComponent : ComponentBase
 {

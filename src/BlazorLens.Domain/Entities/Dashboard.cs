@@ -1,6 +1,4 @@
-﻿using BlazorLens.Shared.Kernel;
-
-namespace BlazorLens.Domain.Entities;
+﻿namespace BlazorLens.Domain.Entities;
 
 public class Dashboard : Entity<Guid>
 {

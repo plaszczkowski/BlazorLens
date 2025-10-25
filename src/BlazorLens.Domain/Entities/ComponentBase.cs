@@ -1,7 +1,4 @@
-﻿using BlazorLens.Domain.Enums;
-using BlazorLens.Shared.Kernel;
-
-namespace BlazorLens.Domain.Entities;
+﻿namespace BlazorLens.Domain.Entities;
 
 /// <summary>
 /// Base class for all component types.
