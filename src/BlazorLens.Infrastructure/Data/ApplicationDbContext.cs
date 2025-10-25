@@ -2,7 +2,6 @@
 using BlazorLens.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using BlazorLens.Application.Interfaces;
 
 namespace BlazorLens.Infrastructure.Data;
 
@@ -11,7 +10,7 @@ namespace BlazorLens.Infrastructure.Data;
 /// Implements IQueryDbContext for query handlers (Dependency Inversion).
 /// Compliance: ARCH-001 (Clean Architecture), ARCH-002 (Separation of Concerns)
 /// </summary>
-public class ApplicationDbContext : DbContext, Application.Interfaces.IQueryDbContext
+public class ApplicationDbContext : DbContext, IQueryDbContext
 {
     /// <summary>
     /// Initializes a new instance of ApplicationDbContext.
@@ -27,29 +26,25 @@ public class ApplicationDbContext : DbContext, Application.Interfaces.IQueryDbCo
 
     /// <summary>
     /// DbSet for Dashboard entities.
+    /// Exposed as IQueryable through IQueryDbContext interface.
     /// </summary>
-    public DbSet<Dashboard> Dashboards => Set<Dashboard>();
+    public DbSet<Dashboard> DashboardsSet => Set<Dashboard>();
 
     /// <summary>
     /// DbSet for DashboardComponent entities.
+    /// Exposed as IQueryable through IQueryDbContext interface.
     /// </summary>
-    public DbSet<DashboardComponent> DashboardComponents => Set<DashboardComponent>();
+    public DbSet<DashboardComponent> DashboardComponentsSet => Set<DashboardComponent>();
 
     /// <summary>
-    /// Executes a raw SQL query and returns results.
-    /// Compliance: SEC-003 (Input Validation) - use parameterized queries
+    /// IQueryDbContext implementation - Dashboards as IQueryable.
     /// </summary>
-    /// <typeparam name="T">Entity type</typeparam>
-    /// <param name="sql">SQL query with parameters</param>
-    /// <param name="parameters">Query parameters</param>
-    /// <returns>Queryable result set</returns>
-    public IQueryable<T> SqlQuery<T>(string sql, params object[] parameters) where T : class
-    {
-        // Guard clauses - CCP-005
-        ArgumentNullException.ThrowIfNull(sql);
+    IQueryable<Dashboard> IQueryDbContext.Dashboards => DashboardsSet;
 
-        return Set<T>().FromSqlRaw(sql, parameters);
-    }
+    /// <summary>
+    /// IQueryDbContext implementation - DashboardComponents as IQueryable.
+    /// </summary>
+    IQueryable<DashboardComponent> IQueryDbContext.DashboardComponents => DashboardComponentsSet;
 
     /// <summary>
     /// Configures entity mappings using FluentAPI.
