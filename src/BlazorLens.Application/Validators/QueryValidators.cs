@@ -1,7 +1,4 @@
-﻿using BlazorLens.Application.Queries;
-using FluentValidation;
-
-namespace BlazorLens.Application.Validators;
+﻿namespace BlazorLens.Application.Validators;
 
 /// <summary>
 /// Validator for GetDashboardByIdQuery.

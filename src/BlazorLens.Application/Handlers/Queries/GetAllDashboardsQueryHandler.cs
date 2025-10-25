@@ -1,9 +1,4 @@
-﻿using BlazorLens.Application.DTOs;
-using BlazorLens.Application.Interfaces;
-using BlazorLens.Application.Queries;
-using MediatR;
-
-namespace BlazorLens.Application.Handlers.Queries;
+﻿namespace BlazorLens.Application.Handlers.Queries;
 
 /// <summary>
 /// Handler for GetAllDashboardsQuery.

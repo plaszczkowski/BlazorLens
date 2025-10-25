@@ -1,11 +1,4 @@
-﻿using BlazorLens.Application.Commands;
-using BlazorLens.Application.DTOs;
-using BlazorLens.Application.Interfaces;
-using BlazorLens.Domain.Entities;
-using BlazorLens.Domain.Enums;
-using MediatR;
-
-namespace BlazorLens.Application.Handlers.Commands;
+﻿namespace BlazorLens.Application.Handlers.Commands;
 
 /// <summary>
 /// Handler for AddComponentCommand.

@@ -1,6 +1,4 @@
-﻿using BlazorLens.Shared.Kernel;
-
-namespace BlazorLens.Application.Interfaces;
+﻿namespace BlazorLens.Application.Interfaces;
 
 public interface IRepository<T> where T : Entity<Guid>
 {

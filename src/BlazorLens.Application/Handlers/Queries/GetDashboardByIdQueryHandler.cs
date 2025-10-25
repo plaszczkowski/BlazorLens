@@ -1,10 +1,4 @@
-﻿using BlazorLens.Application.DTOs;
-using BlazorLens.Application.Interfaces;
-using BlazorLens.Application.Queries;
-using BlazorLens.Domain.Entities;
-using MediatR;
-
-namespace BlazorLens.Application.Handlers.Queries;
+﻿namespace BlazorLens.Application.Handlers.Queries;
 
 /// <summary>
 /// Handler for GetDashboardByIdQuery.

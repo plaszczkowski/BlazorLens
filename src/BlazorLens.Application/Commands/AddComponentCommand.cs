@@ -1,7 +1,4 @@
-﻿using BlazorLens.Application.DTOs;
-using MediatR;
-
-namespace BlazorLens.Application.Commands;
+﻿namespace BlazorLens.Application.Commands;
 
 /// <summary>
 /// Command to add a new Component to a Dashboard.

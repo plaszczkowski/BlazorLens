@@ -1,6 +1,4 @@
-﻿using BlazorLens.Shared.Kernel;
-
-namespace BlazorLens.Application.Interfaces;
+﻿namespace BlazorLens.Application.Interfaces;
 
 /// <summary>
 /// Interface for dispatching domain events to handlers.

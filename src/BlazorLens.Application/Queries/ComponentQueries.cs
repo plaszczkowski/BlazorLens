@@ -1,7 +1,4 @@
-﻿using BlazorLens.Application.DTOs;
-using MediatR;
-
-namespace BlazorLens.Application.Queries;
+﻿namespace BlazorLens.Application.Queries;
 
 /// <summary>
 /// Query to get a Component by its identifier.

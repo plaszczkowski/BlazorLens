@@ -1,6 +1,4 @@
-﻿using BlazorLens.Domain.Entities;
-
-namespace BlazorLens.Application.Interfaces;
+﻿namespace BlazorLens.Application.Interfaces;
 
 /// <summary>
 /// Interface for query operations on the database context.

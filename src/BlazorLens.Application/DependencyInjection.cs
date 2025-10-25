@@ -1,8 +1,4 @@
-﻿using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-
-namespace BlazorLens.Application;
+﻿namespace BlazorLens.Application;
 
 /// <summary>
 /// Application layer dependency injection configuration.
