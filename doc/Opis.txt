@@ -1,7 +1,7 @@
 PROJEKT REAL-TIME BLAZOR DASHBOARD - PEÅNY OPIS
 
 TECHNOLOGIE:
-- .NET 8.0 Core
+- .NET 10 Core
 - Blazor Server
 - SignalR
 - Entity Framework Core
@@ -494,13 +494,13 @@ FAZA 5 - POLISH & NASA STANDARDS (TYDZIEÅƒ 5):
 WYMAGANIA SYSTEMOWE:
 
 DEVELOPMENT:
-- .NET 8.0 SDK
+- .NET 10 SDK
 - Visual Studio 2022 lub VS Code
 - SQL Server 2019+
 - Node.js (dla frontend tooling)
 
 PRODUCTION:
-- Windows/Linux z .NET 8.0 Runtime
+- Windows/Linux z .NET 10 Runtime
 - SQL Server lub PostgreSQL
 - Reverse proxy (IIS, Nginx)
 - 2GB RAM minimum
