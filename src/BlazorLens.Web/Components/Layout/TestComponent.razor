@@ -1,41 +1,52 @@
-﻿@implements IDisposable
+﻿@using BlazorLens.Domain.Enums
+@implements IDisposable
 @*
-    TestComponent - Example component with glassmorphism styling
+    TestComponent - Enhanced demo component with status simulation
     Compliance: UI-001 (Consistent Design), OOD-001 (Single Responsibility)
     
-    This is a demonstration component showing the grid layout capabilities.
-    Will be replaced with actual dashboard components in Phase 2.
+    Features:
+    - Live time updates
+    - Status simulation (Active, Loading, Error, Inactive)
+    - Auto-recovery from errors
+    - Manual refresh and status change controls
 *@
 
 <div class="grid-item">
     <div class="grid-item-header">
         <div class="grid-item-title">
             <svg class="component-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-                <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-                <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-                <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
+                <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
+                <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
+                <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
             </svg>
             Test Component
         </div>
+
+        <!-- Status Indicator in Header -->
+        <div class="grid-item-status">
+            <StatusIndicator Status="@currentStatus" Message="@statusMessage" />
+        </div>
+
         <div class="grid-item-actions">
             <button class="grid-item-action" title="Refresh" @onclick="RefreshComponent">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21.5 2V8M21.5 8H15.5M21.5 8L18 4.5C16.7429 3.24286 15.1767 2.32624 13.4485 1.83853C11.7202 1.35081 9.8912 1.31024 8.1424 1.72055C6.39361 2.13086 4.78541 2.97945 3.47174 4.18719C2.15807 5.39494 1.18624 6.92091 0.654867 8.62122" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M2.5 22V16M2.5 16H8.5M2.5 16L6 19.5C7.25714 20.7571 8.82332 21.6738 10.5515 22.1615C12.2798 22.6492 14.1088 22.6898 15.8576 22.2795C17.6064 21.8691 19.2146 21.0206 20.5283 19.8128C21.8419 18.6051 22.8138 17.0791 23.3451 15.3788" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21.5 2V8M21.5 8H15.5M21.5 8L18 4.5C16.7429 3.24286 15.1767 2.32624 13.4485 1.83853C11.7202 1.35081 9.8912 1.31024 8.1424 1.72055C6.39361 2.13086 4.78541 2.97945 3.47174 4.18719C2.15807 5.39494 1.18624 6.92091 0.654867 8.62122" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M2.5 22V16M2.5 16H8.5M2.5 16L6 19.5C7.25714 20.7571 8.82332 21.6738 10.5515 22.1615C12.2798 22.6492 14.1088 22.6898 15.8576 22.2795C17.6064 21.8691 19.2146 21.0206 20.5283 19.8128C21.8419 18.6051 22.8138 17.0791 23.3451 15.3788" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
             </button>
             <button class="grid-item-action" title="Settings">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
-                    <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                    <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
             </button>
         </div>
     </div>
-    
+
     <div class="grid-item-content">
         <div class="component-demo">
+            <!-- Live Time Section -->
             <div class="demo-section">
                 <h4 class="demo-heading">Live Time</h4>
                 <div class="demo-value time-display">
@@ -44,15 +55,16 @@
                 <p class="demo-description">Updates every second to demonstrate real-time capabilities</p>
             </div>
 
+            <!-- Component Status Section -->
             <div class="demo-section">
                 <h4 class="demo-heading">Component Status</h4>
-                <div class="status-badge status-active">
-                    <span class="status-indicator"></span>
-                    Active
+                <div class="status-demo-container">
+                    <StatusIndicator Status="@currentStatus" Message="@GetDetailedStatusMessage()" />
                 </div>
-                <p class="demo-description">This component is running and receiving updates</p>
+                <p class="demo-description">Current operational status of this component</p>
             </div>
 
+            <!-- Refresh Count Section -->
             <div class="demo-section">
                 <h4 class="demo-heading">Refresh Count</h4>
                 <div class="demo-value counter-display">
@@ -61,14 +73,64 @@
                 <p class="demo-description">Number of manual refreshes: Click the refresh button to test</p>
             </div>
 
+            <!-- Status Simulation Controls -->
+            <div class="demo-section demo-controls">
+                <h4 class="demo-heading">Status Simulation</h4>
+                <div class="control-buttons">
+                    <button class="btn btn-sm btn-loading"
+                            @onclick="SimulateLoading"
+                            disabled="@(currentStatus == ComponentStatus.Loading)">
+                        <span class="btn-icon">↻</span>
+                        Simulate Loading
+                    </button>
+
+                    <button class="btn btn-sm btn-error"
+                            @onclick="SimulateError"
+                            disabled="@(currentStatus == ComponentStatus.Error)">
+                        <span class="btn-icon">⚠</span>
+                        Simulate Error
+                    </button>
+
+                    <button class="btn btn-sm btn-inactive"
+                            @onclick="SimulateInactive"
+                            disabled="@(currentStatus == ComponentStatus.Inactive)">
+                        <span class="btn-icon">○</span>
+                        Set Inactive
+                    </button>
+
+                    <button class="btn btn-sm btn-success"
+                            @onclick="ResetToActive"
+                            disabled="@(currentStatus == ComponentStatus.Active)">
+                        <span class="btn-icon">✓</span>
+                        Reset to Active
+                    </button>
+                </div>
+                <p class="demo-description demo-info-text">
+                    @if (currentStatus == ComponentStatus.Error)
+                    {
+                        <span>⏱️ Auto-recovery in @recoveryCountdown seconds...</span>
+                    }
+                    else if (currentStatus == ComponentStatus.Loading)
+                    {
+                        <span>⏱️ Simulated load completes in @recoveryCountdown seconds...</span>
+                    }
+                    else
+                    {
+                        <span>Use buttons above to test different status states</span>
+                    }
+                </p>
+            </div>
+
+            <!-- Info Section -->
             <div class="demo-info">
                 <svg class="info-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                    <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                    <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
                 <p>
-                    This is a demonstration component showcasing the glassmorphism design and grid layout.
-                    In Phase 2, actual dashboard components will be dynamically loaded here.
+                    This is a demonstration component showcasing the StatusIndicator system and grid layout.
+                    Status changes are simulated with auto-recovery. In Phase 2, actual dashboard components
+                    will replace this demo.
                 </p>
             </div>
         </div>
@@ -76,41 +138,168 @@
 </div>
 
 @code {
+    // === STATE MANAGEMENT ===
     private DateTime currentTime = DateTime.Now;
     private int refreshCount = 0;
-    private Timer? timer;
+    private ComponentStatus currentStatus = ComponentStatus.Active;
+    private string statusMessage = string.Empty;
+    private int recoveryCountdown = 0;
+
+    // === TIMERS ===
+    private Timer? clockTimer;
+    private Timer? recoveryTimer;
 
     /// <summary>
-    /// Initialize timer for live time updates.
+    /// Initialize timers for live updates.
     /// Compliance: CON-005 (Fail-Fast), OOD-001 (Single Responsibility)
     /// </summary>
     protected override void OnInitialized()
     {
-        // Update time every second
-        timer = new Timer(_ =>
+        // Clock timer - updates every second
+        clockTimer = new Timer(_ =>
         {
             currentTime = DateTime.Now;
             InvokeAsync(StateHasChanged);
         }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+
+        statusMessage = "Component initialized successfully";
     }
 
     /// <summary>
     /// Handles manual component refresh.
-    /// Demonstrates action button functionality.
+    /// Resets to Active status and increments counter.
     /// </summary>
     private void RefreshComponent()
     {
         refreshCount++;
         currentTime = DateTime.Now;
+
+        // Reset to active if not in error/loading state
+        if (currentStatus != ComponentStatus.Error && currentStatus != ComponentStatus.Loading)
+        {
+            currentStatus = ComponentStatus.Active;
+            statusMessage = $"Refreshed at {currentTime:HH:mm:ss}";
+        }
+
         StateHasChanged();
     }
 
+    // === STATUS SIMULATION METHODS ===
+
     /// <summary>
-    /// Cleanup timer on component disposal.
+    /// Simulates loading state with 3-second auto-completion.
+    /// Compliance: UX-003 (Visual Feedback)
+    /// </summary>
+    private void SimulateLoading()
+    {
+        currentStatus = ComponentStatus.Loading;
+        statusMessage = "Loading data...";
+        recoveryCountdown = 3;
+
+        StartRecoveryTimer(() =>
+        {
+            currentStatus = ComponentStatus.Active;
+            statusMessage = "Data loaded successfully";
+        });
+    }
+
+    /// <summary>
+    /// Simulates error state with 5-second auto-recovery.
+    /// Compliance: CON-003 (Graceful Degradation)
+    /// </summary>
+    private void SimulateError()
+    {
+        currentStatus = ComponentStatus.Error;
+        statusMessage = "Simulated error occurred";
+        recoveryCountdown = 5;
+
+        StartRecoveryTimer(() =>
+        {
+            currentStatus = ComponentStatus.Active;
+            statusMessage = "Recovered from error";
+        });
+    }
+
+    /// <summary>
+    /// Sets component to inactive state.
+    /// Manual activation required.
+    /// </summary>
+    private void SimulateInactive()
+    {
+        currentStatus = ComponentStatus.Inactive;
+        statusMessage = "Component manually deactivated";
+        StopRecoveryTimer();
+    }
+
+    /// <summary>
+    /// Resets component to active state.
+    /// Clears any pending recovery timers.
+    /// </summary>
+    private void ResetToActive()
+    {
+        currentStatus = ComponentStatus.Active;
+        statusMessage = "Component activated";
+        StopRecoveryTimer();
+        StateHasChanged();
+    }
+
+    // === TIMER MANAGEMENT ===
+
+    /// <summary>
+    /// Starts recovery timer with countdown.
+    /// Executes callback when countdown reaches zero.
+    /// </summary>
+    private void StartRecoveryTimer(Action recoveryAction)
+    {
+        StopRecoveryTimer(); // Clear any existing timer
+
+        recoveryTimer = new Timer(_ =>
+        {
+            recoveryCountdown--;
+
+            if (recoveryCountdown <= 0)
+            {
+                recoveryAction?.Invoke();
+                StopRecoveryTimer();
+            }
+
+            InvokeAsync(StateHasChanged);
+        }, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
+    }
+
+    /// <summary>
+    /// Stops and disposes recovery timer.
+    /// </summary>
+    private void StopRecoveryTimer()
+    {
+        recoveryTimer?.Dispose();
+        recoveryTimer = null;
+        recoveryCountdown = 0;
+    }
+
+    /// <summary>
+    /// Generates detailed status message for large status indicator.
+    /// </summary>
+    private string GetDetailedStatusMessage()
+    {
+        if (string.IsNullOrWhiteSpace(statusMessage))
+            return string.Empty;
+
+        return currentStatus switch
+        {
+            ComponentStatus.Loading => $"{statusMessage} ({recoveryCountdown}s remaining)",
+            ComponentStatus.Error => $"{statusMessage} (auto-recovery in {recoveryCountdown}s)",
+            _ => statusMessage
+        };
+    }
+
+    /// <summary>
+    /// Cleanup timers on component disposal.
     /// Compliance: CON-001 (Resource Management)
     /// </summary>
     public void Dispose()
     {
-        timer?.Dispose();
+        clockTimer?.Dispose();
+        StopRecoveryTimer();
     }
 }

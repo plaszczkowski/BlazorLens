@@ -408,3 +408,5 @@ a {
         gap: var(--space-4);
     }
 }
+
+@import url('./css/test-component-controls.css');

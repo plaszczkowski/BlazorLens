@@ -1,0 +1,71 @@
+@using BlazorLens.Domain.Enums
+@*
+    StatusIndicator - Visual status badge with animations
+    Compliance: UI-001 (Consistent Design), UX-003 (Visual Feedback)
+    
+    Displays component status with color-coded badge and optional tooltip.
+    Supports all ComponentStatus values: Active, Inactive, Loading, Error
+*@
+
+<div class="status-indicator status-@Status.ToString().ToLower()" 
+     title="@GetStatusTooltip()"
+     role="status" 
+     aria-label="Component status: @Status">
+    
+    <span class="status-icon">@GetStatusIcon()</span>
+    <span class="status-text">@Status</span>
+    
+    @if (!string.IsNullOrWhiteSpace(Message))
+    {
+        <span class="status-message">@Message</span>
+    }
+</div>
+
+@code {
+    /// <summary>
+    /// Current component status from Domain enum.
+    /// Compliance: ARCH-001 (Clean Architecture) - using Domain types in Presentation
+    /// </summary>
+    [Parameter]
+    public ComponentStatus Status { get; set; } = ComponentStatus.Active;
+
+    /// <summary>
+    /// Optional message to display alongside status.
+    /// Example: "Last updated 2 minutes ago"
+    /// </summary>
+    [Parameter]
+    public string? Message { get; set; }
+
+    /// <summary>
+    /// Gets the appropriate icon for current status.
+    /// Returns Unicode emoji for accessibility.
+    /// </summary>
+    private string GetStatusIcon() => Status switch
+    {
+        ComponentStatus.Active => "✓",      // Check mark
+        ComponentStatus.Inactive => "○",    // Circle
+        ComponentStatus.Loading => "↻",     // Refresh/loading
+        ComponentStatus.Error => "⚠",       // Warning triangle
+        _ => "?"
+    };
+
+    /// <summary>
+    /// Generates tooltip text based on status and message.
+    /// Provides context for screen readers and hover state.
+    /// </summary>
+    private string GetStatusTooltip()
+    {
+        var baseTooltip = Status switch
+        {
+            ComponentStatus.Active => "Component is running normally",
+            ComponentStatus.Inactive => "Component is not active",
+            ComponentStatus.Loading => "Component is loading data",
+            ComponentStatus.Error => "Component encountered an error",
+            _ => "Unknown status"
+        };
+
+        return string.IsNullOrWhiteSpace(Message) 
+            ? baseTooltip 
+            : $"{baseTooltip} - {Message}";
+    }
+}
