@@ -18,7 +18,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<BlazorLens.Web.Components.Routes>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<BlazorLens.Web.Components.Routes>().AddInteractiveServerRenderMode();
 
 app.Run();
