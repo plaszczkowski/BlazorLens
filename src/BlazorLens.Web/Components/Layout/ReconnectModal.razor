@@ -1,73 +1,31 @@
-﻿@*
-    ReconnectModal - Modern Blazor Server reconnection UI
-    Compliance: UI-001 (Consistent Design), UX-002 (Accessibility)
-*@
-
-<script src="_framework/blazor.server.js"></script>
+﻿<script type="module" src="@Assets["Components/Layout/ReconnectModal.razor.js"]"></script>
 
 <dialog id="components-reconnect-modal" data-nosnippet>
     <div class="components-reconnect-container">
-        <!-- Reconnection Animation -->
         <div class="components-rejoining-animation" aria-hidden="true">
-            <svg class="reconnect-spinner" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M21.5 2V8M21.5 8H15.5M21.5 8L18 4.5C16.7429 3.24286 15.1767 2.32624 13.4485 1.83853C11.7202 1.35081 9.8912 1.31024 8.1424 1.72055C6.39361 2.13086 4.78541 2.97945 3.47174 4.18719C2.15807 5.39494 1.18624 6.92091 0.654867 8.62122" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2.5 22V16M2.5 16H8.5M2.5 16L6 19.5C7.25714 20.7571 8.82332 21.6738 10.5515 22.1615C12.2798 22.6492 14.1088 22.6898 15.8576 22.2795C17.6064 21.8691 19.2146 21.0206 20.5283 19.8128C21.8419 18.6051 22.8138 17.0791 23.3451 15.3788" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <div></div>
+            <div></div>
         </div>
-
-        <!-- First Attempt -->
-        <div class="components-reconnect-first-attempt-visible">
-            <h3 class="reconnect-title">Reconnecting...</h3>
-            <p class="reconnect-message">
-                Connection to server lost. Attempting to reconnect automatically.
-            </p>
-        </div>
-
-        <!-- Repeated Attempt -->
-        <div class="components-reconnect-repeated-attempt-visible">
-            <h3 class="reconnect-title">Reconnection Failed</h3>
-            <p class="reconnect-message">
-                Retrying in <span id="components-seconds-to-next-attempt" class="reconnect-countdown"></span> seconds...
-            </p>
-        </div>
-
-        <!-- Failed -->
-        <div class="components-reconnect-failed-visible">
-            <h3 class="reconnect-title">Connection Failed</h3>
-            <p class="reconnect-message">
-                Unable to reconnect to the server. Please check your connection and try again.
-            </p>
-            <button id="components-reconnect-button" class="reconnect-button reconnect-button-primary">
-                <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21.5 2V8M21.5 8H15.5M21.5 8L18 4.5C16.7429 3.24286 15.1767 2.32624 13.4485 1.83853C11.7202 1.35081 9.8912 1.31024 8.1424 1.72055C6.39361 2.13086 4.78541 2.97945 3.47174 4.18719C2.15807 5.39494 1.18624 6.92091 0.654867 8.62122" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Retry Connection
-            </button>
-        </div>
-
-        <!-- Paused -->
-        <div class="components-pause-visible">
-            <h3 class="reconnect-title">Session Paused</h3>
-            <p class="reconnect-message">
-                Your session has been paused by the server. Click resume to continue.
-            </p>
-            <button id="components-resume-button" class="reconnect-button reconnect-button-primary">
-                <svg class="button-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 3L19 12L5 21V3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                </svg>
-                Resume Session
-            </button>
-        </div>
-
-        <!-- Resume Failed -->
-        <div class="components-resume-failed-visible">
-            <h3 class="reconnect-title">Resume Failed</h3>
-            <p class="reconnect-message">
-                Unable to resume your session. Please reload the page to start a new session.
-            </p>
-            <button onclick="location.reload()" class="reconnect-button reconnect-button-primary">
-                Reload Page
-            </button>
-        </div>
+        <p class="components-reconnect-first-attempt-visible">
+            Rejoining the server...
+        </p>
+        <p class="components-reconnect-repeated-attempt-visible">
+            Rejoin failed... trying again in <span id="components-seconds-to-next-attempt"></span> seconds.
+        </p>
+        <p class="components-reconnect-failed-visible">
+            Failed to rejoin.<br />Please retry or reload the page.
+        </p>
+        <button id="components-reconnect-button" class="components-reconnect-failed-visible">
+            Retry
+        </button>
+        <p class="components-pause-visible">
+            The session has been paused by the server.
+        </p>
+        <button id="components-resume-button" class="components-pause-visible">
+            Resume
+        </button>
+        <p class="components-resume-failed-visible">
+            Failed to resume the session.<br />Please reload the page.
+        </p>
     </div>
 </dialog>

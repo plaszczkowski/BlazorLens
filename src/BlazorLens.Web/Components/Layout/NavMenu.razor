@@ -1,52 +1,30 @@
-﻿@* 
-    NavMenu - Modern navigation menu for sidebar
-    Compliance: UI-001 (Consistent Design), UX-002 (Accessibility)
-*@
-
-<nav class="nav-menu" role="navigation" aria-label="Main navigation">
-    <div class="nav-section">
-        <div class="nav-section-title">Main</div>
-        
-        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="nav-text">Dashboard</span>
-        </NavLink>
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">BlazorLens.Web</a>
     </div>
+</div>
 
-    <!-- Future sections will be added here -->
-    <!--
-    <div class="nav-section">
-        <div class="nav-section-title">Components</div>
-        
-        <NavLink class="nav-link" href="components">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-                <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-                <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-                <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-            </svg>
-            <span class="nav-text">Components</span>
-        </NavLink>
-    </div>
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
-    <div class="nav-section">
-        <div class="nav-section-title">Settings</div>
-        
-        <NavLink class="nav-link" href="settings">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
-                <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <span class="nav-text">Settings</span>
-        </NavLink>
-    </div>
-    -->
-</nav>
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="nav flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
 
-@code {
-    // Navigation menu component
-    // Additional menu items will be added in future phases
-}
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="weather">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
