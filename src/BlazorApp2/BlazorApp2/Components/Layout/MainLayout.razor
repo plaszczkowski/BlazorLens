@@ -1,0 +1,103 @@
+﻿@inherits LayoutComponentBase
+@* 
+    MainLayout - Modern collapsible sidebar layout
+    Compliance: UI-001 (Consistent Design), UX-001 (Responsive), UX-002 (Accessibility)
+*@
+
+<div class="app-container @(sidebarCollapsed ? "sidebar-collapsed" : "")">
+    <!-- Sidebar -->
+    <aside class="app-sidebar" role="navigation" aria-label="Main navigation">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="7" height="7" rx="1" fill="currentColor" opacity="0.9"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1" fill="currentColor" opacity="0.6"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1" fill="currentColor" opacity="0.7"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1" fill="currentColor" opacity="0.8"/>
+                </svg>
+                <span class="logo-text">BlazorLens</span>
+            </div>
+        </div>
+
+        <NavMenu />
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+        <!-- Top Bar -->
+        <header class="app-header" role="banner">
+            <button 
+                class="sidebar-toggle" 
+                @onclick="ToggleSidebar"
+                aria-label="@(sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar")"
+                title="@(sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar")">
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+
+            <div class="header-content">
+                <h1 class="header-title">Dashboard</h1>
+            </div>
+
+            <div class="header-actions">
+                <!-- Future: User profile, notifications, settings -->
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="app-content" role="main">
+            <ErrorBoundary>
+                <ChildContent>
+                    @Body
+                </ChildContent>
+                <ErrorContent Context="exception">
+                    <div class="error-container">
+                        <div class="error-icon">⚠️</div>
+                        <h3 class="error-title">Something went wrong</h3>
+                        <p class="error-message">An unexpected error occurred. Please try refreshing the page.</p>
+                        <button class="btn btn-primary" @onclick="ReloadPage">
+                            Reload Page
+                        </button>
+                    </div>
+                </ErrorContent>
+            </ErrorBoundary>
+        </main>
+    </div>
+</div>
+
+<!-- Blazor Reconnection UI - Hidden by default -->
+<div id="blazor-error-ui" data-nosnippet>
+    <div class="reconnect-container">
+        <span class="reconnect-icon">🔄</span>
+        <span class="reconnect-text">Connection lost. Attempting to reconnect...</span>
+        <button class="reconnect-reload" @onclick="ReloadPage">Reload</button>
+        <button class="reconnect-dismiss" onclick="document.getElementById('blazor-error-ui').style.display='none'">✕</button>
+    </div>
+</div>
+
+@code {
+    private bool sidebarCollapsed = false;
+
+    /// <summary>
+    /// Toggles the sidebar collapsed/expanded state.
+    /// Compliance: UX-001 (Responsive behavior)
+    /// </summary>
+    private void ToggleSidebar()
+    {
+        sidebarCollapsed = !sidebarCollapsed;
+    }
+
+    /// <summary>
+    /// Reloads the current page.
+    /// Used for error recovery.
+    /// </summary>
+    private void ReloadPage()
+    {
+        // Force page reload
+        NavigationManager?.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+
+    [Inject]
+    private NavigationManager? NavigationManager { get; set; }
+}
