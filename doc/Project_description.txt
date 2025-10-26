@@ -1,69 +1,69 @@
-PROJEKT REAL-TIME BLAZOR DASHBOARD - PEÅNY OPIS
+# REAL-TIME BLAZOR DASHBOARD - FULL DESCRIPTION
 
-TECHNOLOGIE:
+## TECHNOLOGIES:
 - .NET 10 Core
 - Blazor Server
 - SignalR
 - Entity Framework Core
 - SQL Server
-- xUnit/Moq dla testÃ³w
-- Bootstrap/MudBlazor dla UI
+- xUnit/Moq for tests
+- Bootstrap/MudBlazor for UI
 - Docker/Kubernetes
 
-ARCHITEKTURA:
-Clean Architecture z podziaÅ‚em na 4 warstwy:
-1. Domain - czysta logika biznesowa
-2. Application - przypadki uÅ¼ycia, CQRS
-3. Infrastructure - implementacje zewnÄ™trzne
-4. Web - warstwa prezentacji Blazor
+## ARCHITECTURE:
+Clean Architecture with 4-layer division:
+1. Domain - pure business logic
+2. Application - use cases, CQRS
+3. Infrastructure - external implementations
+4. Web - Blazor presentation layer
 
-GÅÃ“WNE FUNKCJONALNOÅšCI:
+## MAIN FUNCTIONALITIES:
 
-KONTENER KOMPONENTÃ“W:
-- Dynamiczny grid layout z CSS Grid
-- Automatyczne dostosowywanie rozmiarÃ³w
-- Drag & drop zmiana pozycji
-- Resize handles na krawÄ™dziach
-- Collapse/expand z systemem zakÅ‚adek
-- Persystencja stanu layoutu
+### COMPONENT CONTAINER:
+- Dynamic grid layout with CSS Grid
+- Automatic size adjustment
+- Drag & drop position change
+- Resize handles on edges
+- Collapse/expand with tab system
+- Layout state persistence
 
-SYSTEM KOMPONENTÃ“W:
-- Dynamiczne Å‚adowanie komponentÃ³w
-- Registry dostÄ™pnych komponentÃ³w
-- Selektor z listy rozwijanej
-- Plugin system dla komponentÃ³w niestandardowych
-- Metadata komponentÃ³w (wersja, autor, opis)
+### COMPONENT SYSTEM:
+- Dynamic component loading
+- Available components registry
+- Dropdown selector
+- Plugin system for custom components
+- Component metadata (version, author, description)
 
-MONITORING CZASU RZECZYWISTEGO:
-- SignalR do live updates
-- Health checks komponentÃ³w
-- Metryki wydajnoÅ›ci
-- Logowanie zdarzeÅ„
-- Dashboard monitoringowy
+### REAL-TIME MONITORING:
+- SignalR for live updates
+- Component health checks
+- Performance metrics
+- Event logging
+- Monitoring dashboard
 
-EVENT DRIVEN ARCHITECTURE:
-- Domain Events dla zmian stanu
-- Event handlers w Application layer
-- Real-time broadcasting przez SignalR
-- Event sourcing dla audytu
+### EVENT DRIVEN ARCHITECTURE:
+- Domain Events for state changes
+- Event handlers in Application layer
+- Real-time broadcasting via SignalR
+- Event sourcing for audit
 
-BEZPIECZEÅƒSTWO NASA GRADE:
+### NASA GRADE SECURITY:
 - Authentication/Authorization
 - Policy-based access control
-- Data validation i sanitization
-- Encryption w spoczynku i transporcie
+- Data validation and sanitization
+- Encryption at rest and in transit
 - Audit logging
 
-RESPONSIVE DESIGN:
+### RESPONSIVE DESIGN:
 - Mobile-first approach
 - Adaptive layout
 - Touch-friendly controls
 - Progressive enhancement
 
-MODEL DOMENOWY:
+## DOMAIN MODEL:
 
-ENTITIES:
-ComponentBase - baza wszystkich komponentÃ³w
+### ENTITIES:
+ComponentBase - base for all components
 - Guid Id
 - string Name
 - string Description  
@@ -71,14 +71,14 @@ ComponentBase - baza wszystkich komponentÃ³w
 - ComponentStatus Status
 - DateTime CreatedAt
 
-DashboardComponent - komponent na dashboardzie
+DashboardComponent - dashboard component
 - ComponentPosition Position
 - ComponentSize Size
 - bool IsPinned
 - bool IsVisible
 - string ComponentData
 
-VALUE OBJECTS:
+### VALUE OBJECTS:
 ComponentPosition
 - int Row
 - int Column  
@@ -96,7 +96,7 @@ ComponentMetadata
 - string Author
 - DateTime LastUpdated
 
-DOMAIN EVENTS:
+### DOMAIN EVENTS:
 ComponentResizedEvent
 - Guid ComponentId
 - ComponentSize OldSize
@@ -111,9 +111,9 @@ ComponentVisibilityToggledEvent
 - Guid ComponentId
 - bool NewVisibility
 
-CQRS STRUCTURE:
+## CQRS STRUCTURE:
 
-COMMANDS:
+### COMMANDS:
 AddComponentCommand
 - string Name
 - ComponentType Type
@@ -133,26 +133,26 @@ ToggleComponentVisibilityCommand
 RemoveComponentCommand
 - Guid ComponentId
 
-QUERIES:
+### QUERIES:
 GetAvailableComponentsQuery
-- Zwraca listÄ™ dostÄ™pnych komponentÃ³w
+- Returns list of available components
 
 GetDashboardLayoutQuery  
-- Zwraca aktualny layout dashboardu
+- Returns current dashboard layout
 
 GetComponentStatusQuery
 - Guid ComponentId
-- Zwraca status komponentu
+- Returns component status
 
 GetComponentMetricsQuery
 - Guid ComponentId
-- Zwraca metryki wydajnoÅ›ci
+- Returns performance metrics
 
-HANDLERS:
-Command Handlers - implementujÄ… IRequestHandler<TCommand>
-Query Handlers - implementujÄ… IRequestHandler<TQuery, TResult>
+### HANDLERS:
+Command Handlers - implement IRequestHandler<TCommand>
+Query Handlers - implement IRequestHandler<TQuery, TResult>
 
-INTERFACES:
+## INTERFACES:
 IComponentRepository
 - Task<DashboardComponent> GetByIdAsync(Guid id)
 - Task<List<DashboardComponent>> GetByDashboardIdAsync(Guid dashboardId)
@@ -171,9 +171,9 @@ IComponentMonitor
 - Task StartMonitoringAsync(Guid componentId)
 - Task StopMonitoringAsync(Guid componentId)
 
-IMPLEMENTACJE INFRASTRUKTURY:
+## INFRASTRUCTURE IMPLEMENTATIONS:
 
-SIGNALR HUB:
+### SIGNALR HUB:
 DashboardHub : Hub
 - Task SubscribeToDashboard(Guid dashboardId)
 - Task ComponentResized(Guid componentId, ComponentSize newSize)
@@ -187,53 +187,53 @@ IDashboardClient
 - Task ComponentStatusChanged(Guid componentId, ComponentStatus status)
 - Task LayoutChanged(DashboardLayoutDto layout)
 
-REPOSITORIES:
+### REPOSITORIES:
 ComponentRepository : IComponentRepository
-- Implementacja z Entity Framework Core
+- Implementation with Entity Framework Core
 
 ComponentRegistry : IComponentRegistry
-- Dynamiczne odkrywanie komponentÃ³w przez reflection
-- Cache dostÄ™pnych komponentÃ³w
+- Dynamic component discovery via reflection
+- Available components cache
 
-SERVICES:
+### SERVICES:
 ComponentMonitoringService : BackgroundService
-- Monitorowanie zdrowia komponentÃ³w
-- Zbieranie metryk wydajnoÅ›ci
-- Alerty przy problemach
+- Component health monitoring
+- Performance metrics collection
+- Alerting on issues
 
 LayoutManager
-- ZarzÄ…dzanie pozycjonowaniem komponentÃ³w
-- RozwiÄ…zywanie konfliktÃ³w pozycji
-- Optymalizacja layoutu
+- Component positioning management
+- Position conflict resolution
+- Layout optimization
 
 ResizeService
-- ObsÅ‚uga zmiany rozmiarÃ³w
-- Walidacja minimalnych/maksymalnych rozmiarÃ³w
-- Aktualizacja sÄ…siednich komponentÃ³w
+- Size change handling
+- Min/max size validation
+- Adjacent components update
 
-KOMPONENTY BLAZOR:
+## BLAZOR COMPONENTS:
 
-LAYOUT COMPONENTS:
+### LAYOUT COMPONENTS:
 ComponentContainer.razor
-- GÅ‚Ã³wny kontener grid
-- ObsÅ‚uga drag & drop
+- Main grid container
+- Drag & drop handling
 - Auto-layout algorithms
 
 ResizablePanel.razor
-- Komponent z resize handles
+- Component with resize handles
 - Mouse/touch events
 - Constraint validation
 
 DockablePanel.razor
-- System przypinania jak VS
+- VS-style docking system
 - Collapse/expand functionality
-- Tab interface dla zminimalizowanych
+- Tab interface for minimized ones
 
-FUNCTIONAL COMPONENTS:
+### FUNCTIONAL COMPONENTS:
 ComponentSelector.razor
-- Lista dostÄ™pnych komponentÃ³w
-- Search i filtrowanie
-- Preview komponentÃ³w
+- Available components list
+- Search and filtering
+- Component preview
 
 MonitoringPanel.razor
 - Live metrics display
@@ -243,129 +243,129 @@ MonitoringPanel.razor
 StatusIndicator.razor
 - Visual status indicators
 - Color-coded states
-- Tooltip z detalami
+- Tooltip with details
 
-PLUGIN COMPONENTS:
+### PLUGIN COMPONENTS:
 BasePluginComponent.razor
-- Bazowa klasa dla pluginÃ³w
+- Base class for plugins
 - Lifecycle management
 - Error boundary
 
 PluginHost.razor
-- Dynamiczne Å‚adowanie pluginÃ³w
+- Dynamic plugin loading
 - Sandbox execution
 - Resource management
 
-SERVICES UI:
+### UI SERVICES:
 ComponentFactory
-- Dynamiczne tworzenie komponentÃ³w
+- Dynamic component creation
 - Dependency injection
 - Lifecycle management
 
 DragDropService
-- ObsÅ‚uga drag & drop
+- Drag & drop handling
 - Visual feedback
 - Position calculation
 
 RealTimeMonitor
-- Subskrypcja SignalR events
+- SignalR events subscription
 - State synchronization
 - Conflict resolution
 
-KONFIGURACJA BEZPIECZEÅƒSTWA:
+## SECURITY CONFIGURATION:
 
-POLICIES:
-DashboardAccess - dostep do dashboardu
-ComponentManagement - zarzÄ…dzanie komponentami
-SystemAdministration - administracja systemem
+### POLICIES:
+DashboardAccess - dashboard access
+ComponentManagement - component management
+SystemAdministration - system administration
 
-AUTHENTICATION:
+### AUTHENTICATION:
 JWT Bearer tokens
 Claims-based identity
 Role-based access
 
-AUTHORIZATION:
+### AUTHORIZATION:
 Policy-based requirements
 Resource-based authorization
 Permission checks
 
-DATA PROTECTION:
-Encryption danych wraÅ¼liwych
+### DATA PROTECTION:
+Sensitive data encryption
 SQL injection prevention
 XSS protection
 
-MONITORING I OBSERWOWALNOÅšÄ†:
+## MONITORING AND OBSERVABILITY:
 
-HEALTH CHECKS:
-ComponentHealthCheck - zdrowie komponentow
-DatabaseHealthCheck - dostÄ™pnoÅ›Ä‡ bazy
-SignalRHealthCheck - poÅ‚Ä…czenia SignalR
-MemoryHealthCheck - uÅ¼ycie pamiÄ™ci
+### HEALTH CHECKS:
+ComponentHealthCheck - component health
+DatabaseHealthCheck - database availability
+SignalRHealthCheck - SignalR connections
+MemoryHealthCheck - memory usage
 
-METRICS:
-Performance metrics - czasy renderowania
-Usage metrics - uÅ¼ycie komponentÃ³w
-Error metrics - bÅ‚Ä™dy i wyjÄ…tki
-Business metrics - metryki biznesowe
+### METRICS:
+Performance metrics - rendering times
+Usage metrics - component usage
+Error metrics - errors and exceptions
+Business metrics - business metrics
 
-LOGGING:
-Structured logging z Serilog
+### LOGGING:
+Structured logging with Serilog
 Different log levels
 Audit trails
 Performance tracing
 
-TESTING STRATEGY:
+## TESTING STRATEGY:
 
-UNIT TESTS:
+### UNIT TESTS:
 Domain logic tests
 Application logic tests
 Utility functions tests
 
-INTEGRATION TESTS:
+### INTEGRATION TESTS:
 Database integration
 API integration
 Service integration
 
-E2E TESTS:
+### E2E TESTS:
 UI flows tests
 User journeys tests
 Critical paths tests
 
-TEST DOUBLES:
+### TEST DOUBLES:
 Mock repositories
 Fake services
 Test containers
 
-DEPLOYMENT I DEVOPS:
+## DEPLOYMENT AND DEVOPS:
 
-DOCKER:
+### DOCKER:
 Multi-stage builds
 Health check endpoints
 Environment-based configuration
 
-ORCHESTRATION:
-Docker Compose dla development
-Kubernetes dla production
+### ORCHESTRATION:
+Docker Compose for development
+Kubernetes for production
 Service discovery
 
-CI/CD:
+### CI/CD:
 Automated testing
 Quality gates
 Security scanning
 
-MONITORING PRODUCTION:
+### PRODUCTION MONITORING:
 Application Insights
 Azure Monitor
 Custom dashboards
 
-PLUGIN SYSTEM:
+## PLUGIN SYSTEM:
 
-ARCHITECTURE:
+### ARCHITECTURE:
 Modular design
 Loose coupling
 Dynamic loading
 
-INTERFACES:
+### INTERFACES:
 IPluginComponent
 - string Name { get; }
 - string Version { get; }
@@ -377,7 +377,7 @@ IPluginHost
 - Task UnloadPluginAsync(string pluginName)
 - Task<List<IPluginComponent>> GetLoadedPluginsAsync()
 
-IMPLEMENTATION:
+### IMPLEMENTATION:
 PluginLoader
 - Assembly loading
 - Dependency resolution
@@ -388,163 +388,163 @@ PluginRegistry
 - Metadata management
 - Conflict resolution
 
-RESPONSIVE DESIGN FEATURES:
+## RESPONSIVE DESIGN FEATURES:
 
-CSS GRID LAYOUT:
+### CSS GRID LAYOUT:
 Dynamic grid areas
 Auto-placement
 Gap control
 
-RESPONSIVE UTILITIES:
+### RESPONSIVE UTILITIES:
 Breakpoint system
 Mobile-first media queries
 Touch interaction support
 
-ACCESSIBILITY:
+### ACCESSIBILITY:
 Screen reader support
 Keyboard navigation
 High contrast themes
 
-PERFORMANCE OPTIMIZATIONS:
+## PERFORMANCE OPTIMIZATIONS:
 
-SIGNALR OPTIMIZATIONS:
+### SIGNALR OPTIMIZATIONS:
 Message size limits
 Connection management
 Background processing
 
-BLAZOR OPTIMIZATIONS:
+### BLAZOR OPTIMIZATIONS:
 Virtualization
 Lazy loading
 Component lifecycle management
 
-CACHING STRATEGIES:
+### CACHING STRATEGIES:
 Memory caching
 Distributed caching
 Cache invalidation
 
-DATABASE OPTIMIZATIONS:
+### DATABASE OPTIMIZATIONS:
 Query optimization
 Indexing strategy
 Connection pooling
 
-NASA STANDARDS COMPLIANCE:
+## NASA STANDARDS COMPLIANCE:
 
-RELIABILITY:
+### RELIABILITY:
 Redundant components
 Graceful degradation
 Automatic recovery
 
-SAFETY:
+### SAFETY:
 Input validation
 Boundary checks
 Exception handling
 
-SECURITY:
+### SECURITY:
 Data encryption
 Access controls
 Audit logging
 
-MAINTAINABILITY:
+### MAINTAINABILITY:
 Clean code standards
 Comprehensive documentation
 Automated testing
 
-OBSERVABILITY:
+### OBSERVABILITY:
 Comprehensive logging
 Performance monitoring
 Health checking
 
-SCALABILITY:
+### SCALABILITY:
 Horizontal scaling
 Load balancing
 Resource management
 
-ROADMAP IMPLEMENTACYJNY:
+## IMPLEMENTATION ROADMAP:
 
-FAZA 1 - FOUNDATION (TYDZIEÅƒ 1):
-1. Setup projektu z Clean Architecture
-2. Podstawowy model domenowy
-3. Konfiguracja Entity Framework Core
-4. Podstawowy layout Blazor
+### PHASE 1 - FOUNDATION (WEEK 1):
+1. Project setup with Clean Architecture
+2. Basic domain model
+3. Entity Framework Core configuration
+4. Basic Blazor layout
 
-FAZA 2 - CORE FEATURES (TYDZIEÅƒ 2):
-5. Component container z grid layout
-6. Component registry i discovery
-7. SignalR integration dla real-time
+### PHASE 2 - CORE FEATURES (WEEK 2):
+5. Component container with grid layout
+6. Component registry and discovery
+7. SignalR integration for real-time
 8. Resize functionality
 
-FAZA 3 - ADVANCED UI (TYDZIEÅƒ 3):
-9. Docking system VS-style
-10. Responsive layout z auto-adjustment
-11. Component selector z listy
-12. State persistence w local storage
+### PHASE 3 - ADVANCED UI (WEEK 3):
+9. VS-style docking system
+10. Responsive layout with auto-adjustment
+11. Component selector from list
+12. State persistence in local storage
 
-FAZA 4 - ENTERPRISE FEATURES (TYDZIEÅƒ 4):
-13. Monitoring dashboard z metrykami
+### PHASE 4 - ENTERPRISE FEATURES (WEEK 4):
+13. Monitoring dashboard with metrics
 14. Security implementation
-15. Error handling i logging
-16. Health checks i monitoring
+15. Error handling and logging
+16. Health checks and monitoring
 
-FAZA 5 - POLISH & NASA STANDARDS (TYDZIEÅƒ 5):
+### PHASE 5 - POLISH & NASA STANDARDS (WEEK 5):
 17. Performance optimization
 18. Comprehensive testing suite
 19. Documentation
 20. Deployment setup
 
-WYMAGANIA SYSTEMOWE:
+## SYSTEM REQUIREMENTS:
 
-DEVELOPMENT:
+### DEVELOPMENT:
 - .NET 10 SDK
-- Visual Studio 2022 lub VS Code
+- Visual Studio 2022 or VS Code
 - SQL Server 2019+
-- Node.js (dla frontend tooling)
+- Node.js (for frontend tooling)
 
-PRODUCTION:
-- Windows/Linux z .NET 10 Runtime
-- SQL Server lub PostgreSQL
+### PRODUCTION:
+- Windows/Linux with .NET 10 Runtime
+- SQL Server or PostgreSQL
 - Reverse proxy (IIS, Nginx)
 - 2GB RAM minimum
 
-DEPLOYMENT:
+### DEPLOYMENT:
 - Docker 20.10+
 - Kubernetes 1.25+
 - Helm charts
 - CI/CD pipeline
 
-MONITORING:
+### MONITORING:
 - Application Insights
 - Prometheus + Grafana
 - ELK Stack
 - Azure Monitor
 
-ZALETY ARCHITEKTURY:
+## ARCHITECTURE ADVANTAGES:
 
-SCALABILITY:
-- Horizontal scaling przez SignalR backplane
-- Database sharding gotowe
+### SCALABILITY:
+- Horizontal scaling via SignalR backplane
+- Database sharding ready
 - Microservices readiness
 
-MAINTAINABILITY:
+### MAINTAINABILITY:
 - Clean separation of concerns
 - Comprehensive testing
 - Documentation
 
-FLEXIBILITY:
-- Plugin system rozszerzalny
-- Multiple UI frameworks moÅ¼liwe
+### FLEXIBILITY:
+- Extensible plugin system
+- Multiple UI frameworks possible
 - Database agnostic
 
-RELIABILITY:
+### RELIABILITY:
 - Fault-tolerant design
 - Graceful error handling
 - Comprehensive monitoring
 
-PERFORMANCE:
+### PERFORMANCE:
 - Optimized real-time communication
 - Efficient rendering
 - Smart caching
 
-BEZPIECZEÅƒSTWO:
+### SECURITY:
 - Defense in depth
-- Compliance z standardami
+- Compliance with standards
 - Regular security updates
