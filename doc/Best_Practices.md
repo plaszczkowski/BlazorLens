@@ -6,9 +6,9 @@ This document codifies an evolving canon of engineering rules, patterns, and bes
 
 ## A. Foundational & Clean Code Principles
 
-| Rule ID | Principle                        | Description                                                    | Enforcement                                  |
-|---------|----------------------------------|----------------------------------------------------------------|----------------------------------------------|
-| CCP-001 | DRY (Donâ€™t Repeat Yourself)      | Single source of truth for every concept or logic.            | Static analysis; duplicate-finder reports.    |
+| Rule ID | Principle                        | Description                                                   | Enforcement                                   |
+|---------|----------------------------------|---------------------------------------------------------------|-----------------------------------------------|
+| CCP-001 | DRY (Donâ€™t Repeat Yourself)    | Single source of truth for every concept or logic.            | Static analysis; duplicate-finder reports.    |
 | CCP-002 | KISS                             | Prefer the simplest solution that meets requirements.         | Code reviews reject unneeded abstractions.    |
 | CCP-003 | YAGNI                            | Do not add features until requested by real users.            | Trace code back to ticket before merge.       |
 | CCP-004 | POLA (Least Astonishment)        | APIs and functions behave as documented and expected.         | Contract tests; API-review checklist.         |
@@ -31,8 +31,8 @@ This document codifies an evolving canon of engineering rules, patterns, and bes
 
 ## B. Architectural Principles
 
-| Rule ID  | Principle                       | Description                                                    | Enforcement                                       |
-|----------|---------------------------------|----------------------------------------------------------------|---------------------------------------------------|
+| Rule ID  | Principle                       | Description                                                   | Enforcement                                        |
+|----------|---------------------------------|---------------------------------------------------------------|----------------------------------------------------|
 | ARCH-001 | Clean Architecture              | Core logic depends on abstractions; frameworks outward.       | Dependency-graph enforcement; layer tests.         |
 | ARCH-002 | Separation of Concerns (SoC)    | Each layer has a single responsibility.                       | Architecture lint; no cross-layer imports.         |
 | ARCH-003 | CQRS                            | Reads and writes physically and semantically separated.       | Distinct packages; schema-validation pipelines.    |
@@ -252,8 +252,8 @@ This document codifies an evolving canon of engineering rules, patterns, and bes
 
 ---
 
-ðŸ” Enforcement & Self-Check Strategy
+### Enforcement & Self-Check Strategy
 
 All rules continue to be enforced via the centralized protocol, rubric, and CI/CD integrations. Violations are logged, prioritized, and remediated according to the established self-check strategy.  
 
-*Version: 3.1 â€¢ Maintainer: PaweÅ‚ PÅ‚aszczykowski â€¢ Last Updated: 2025-10-14*  
+*Version: 1.1 Maintainer: Paul‚ Laszczkowski, Last Updated: 2025-10-14*  
